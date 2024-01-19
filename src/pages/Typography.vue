@@ -1,5 +1,5 @@
 <template>
-  <q-apge class="q-pa-xl">
+  <q-page class="q-pa-xl">
     <section class="q-mb-xl">
       <div class="text-h4">Heading</div>
       <q-separator class="q-my-md" />
@@ -60,7 +60,7 @@
         industry.
       </p>
     </section>
-  </q-apge>
+  </q-page>
 </template>
 
 <script setup></script>
