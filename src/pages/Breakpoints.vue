@@ -20,4 +20,8 @@
     background-color: $red;
   }
 }
+.target {
+  body.screen--sm & {
+  }
+}
 </style>
