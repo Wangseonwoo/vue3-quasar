@@ -3,3 +3,12 @@
 body {
   font-family: 'Nanum Gothic', sans-serif;
 }
+
+// body.body--light {
+//   /* ... */
+// }
+
+body.body--dark {
+  /* ... */
+  --q-primary: #161717; // css의 루트 변수 변경 동적 변경
+}

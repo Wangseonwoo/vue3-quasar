@@ -119,5 +119,77 @@ framework: {
 ---
 
 - Sass/Scss Variables
+
   > Vairables list 에서 변경하고 싶은 변수를 복사해  
   > quasar.variables.scss파일 에 붙여 넣고 원사는 값으로 수정 가능
+
+  ## 6. Dark Mode
+
+  ### Quasar 지원 내장 플러그인 사용
+
+  ```js
+  plugins: ['LocalStorage'],
+  ```
+
+  > dark Mode 플러그인을 사용하기 위해 quasar.config.js 파일의 quasar.config.js 파일에 추가
+
+  ```js
+  const darkModeIcon = computed(() =>
+    $q.dark.isActive ? 'dark_mode' : 'light_mode',
+  );
+  ```
+
+  > computed로 상태 저장변수 선언
+  > 내장 플러그인으로 $q.dark 사용
+
+  ```js
+  const toggleDarkMode = () => {
+    $q.dark.toggle();
+    $q.localStorage.set('darkMode', $q.dark.isActive);
+  };
+  ```
+
+  > toggle을 사용하여 다크, 라이트로 상태 변환
+  > localStorage를 활용 하여 웹 로컬스토리지에 상태 저장
+  > ❗️새로 고침시 상태가 바뀜 그러므로 로컬 스토리지 getItem을 사용하여 상태 불러오기
+
+  ```js
+  const init = () => {
+    const darkMode = $q.localStorage.getItem('darkMode');
+    $q.dark.set(darkMode);
+  };
+  init();
+  ```
+
+  > ❓ 위의 코드를 boot 폴더로 생성하여 따로 관리
+
+  ```bash
+  $ quasar new boot <파일 명>
+  ```
+
+  ```js
+  export default boot(async (/* { app, router, ... } */) => {
+    console.log('### initialization ###');
+    // Dark mode 설정
+    const darkMode = LocalStorage.getItem('darkMode');
+    Dark.set(darkMode);
+  });
+  ```
+
+  > boot 파일에 만들면 파일명을 콰이사 컴픽 파일에 세팅을 해야함  
+  > 뷰컴포넌트에 해당하는 파일이 아니어서 q오브젝트에 접근하려면  
+  > import { LocalStorage, Dark } from 'quasar'; 이런식으로 임포트해서  
+  > $q.localStorage -> LocalStorage , $q.dark -> Dark 로 사용이 가능
+
+  ```scss
+  // body.body--light {
+  //   /* ... */
+  // }
+
+  body.body--dark {
+  /_ ... _/
+  --q-primary: #161717; // css의 루트 변수 변경 동적 변경
+  }
+  ```
+
+  > 위의 코드와 같이 app.scss 파일에서 동적으로 변경할 수 있다.
