@@ -123,73 +123,111 @@ framework: {
   > Vairables list 에서 변경하고 싶은 변수를 복사해  
   > quasar.variables.scss파일 에 붙여 넣고 원사는 값으로 수정 가능
 
-  ## 6. Dark Mode
+## 6. Dark Mode
 
-  ### Quasar 지원 내장 플러그인 사용
+### Quasar 지원 내장 플러그인 사용
 
-  ```js
-  plugins: ['LocalStorage'],
+```js
+plugins: ['LocalStorage'],
+```
+
+> dark Mode 플러그인을 사용하기 위해 quasar.config.js 파일의 quasar.config.js 파일에 추가
+
+```js
+const darkModeIcon = computed(() =>
+  $q.dark.isActive ? 'dark_mode' : 'light_mode',
+);
+```
+
+> computed로 상태 저장변수 선언
+> 내장 플러그인으로 $q.dark 사용
+
+```js
+const toggleDarkMode = () => {
+  $q.dark.toggle();
+  $q.localStorage.set('darkMode', $q.dark.isActive);
+};
+```
+
+> toggle을 사용하여 다크, 라이트로 상태 변환
+> localStorage를 활용 하여 웹 로컬스토리지에 상태 저장
+> ❗️새로 고침시 상태가 바뀜 그러므로 로컬 스토리지 getItem을 사용하여 상태 불러오기
+
+```js
+const init = () => {
+  const darkMode = $q.localStorage.getItem('darkMode');
+  $q.dark.set(darkMode);
+};
+init();
+```
+
+> ❓ 위의 코드를 boot 폴더로 생성하여 따로 관리
+
+```bash
+$ quasar new boot <파일 명>
+```
+
+```js
+export default boot(async (/* { app, router, ... } */) => {
+  console.log('### initialization ###');
+  // Dark mode 설정
+  const darkMode = LocalStorage.getItem('darkMode');
+  Dark.set(darkMode);
+});
+```
+
+> boot 파일에 만들면 파일명을 콰이사 컴픽 파일에 세팅을 해야함  
+> 뷰컴포넌트에 해당하는 파일이 아니어서 q오브젝트에 접근하려면  
+> import { LocalStorage, Dark } from 'quasar'; 이런식으로 임포트해서  
+> $q.localStorage -> LocalStorage , $q.dark -> Dark 로 사용이 가능
+
+```scss
+// body.body--light {
+//   /* ... */
+// }
+
+body.body--dark {
+/_ ... _/
+--q-primary: #161717; // css의 루트 변수 변경 동적 변경
+}
+```
+
+> 위의 코드와 같이 app.scss 파일에서 동적으로 변경할 수 있다.
+
+## 7. Flexbox & Grid
+
+- flexbox 지정하는 법
+
+  ```html
+  <div class="row"></div>
+  <div class="column"></div>
   ```
 
-  > dark Mode 플러그인을 사용하기 위해 quasar.config.js 파일의 quasar.config.js 파일에 추가
+  > Flex는 12 column 사이즈로 되어있음 col 합이 12가 넘으면 아래로 줄 이동 함
 
-  ```js
-  const darkModeIcon = computed(() =>
-    $q.dark.isActive ? 'dark_mode' : 'light_mode',
-  );
+* gutter 주는 법
+
+  > 일반 아이템일 경우
+
+  ```html
+  <!-- 상하좌우 전부  -->
+  <div class="q-gutter-md"></div>
+  <!-- 좌우 만  -->
+  <div class="q-gutter-x-md"></div>
+  <!-- 상하 만  -->
+  <div class="q-gutter-y-md"></div>
   ```
 
-  > computed로 상태 저장변수 선언
-  > 내장 플러그인으로 $q.dark 사용
+  > flex 요소 아이템일 경우
 
-  ```js
-  const toggleDarkMode = () => {
-    $q.dark.toggle();
-    $q.localStorage.set('darkMode', $q.dark.isActive);
-  };
+  ```html
+  <!-- q 뒤에 col을 붙인다. -->
+  <div class="q-col-gutter-md"></div>
   ```
 
-  > toggle을 사용하여 다크, 라이트로 상태 변환
-  > localStorage를 활용 하여 웹 로컬스토리지에 상태 저장
-  > ❗️새로 고침시 상태가 바뀜 그러므로 로컬 스토리지 getItem을 사용하여 상태 불러오기
+  > breakpoint를 설정할수 있다.
 
-  ```js
-  const init = () => {
-    const darkMode = $q.localStorage.getItem('darkMode');
-    $q.dark.set(darkMode);
-  };
-  init();
+  ```html
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3"></div>
+  <!-- default값, 사이즈별 값을 설정할 수 있다. -->
   ```
-
-  > ❓ 위의 코드를 boot 폴더로 생성하여 따로 관리
-
-  ```bash
-  $ quasar new boot <파일 명>
-  ```
-
-  ```js
-  export default boot(async (/* { app, router, ... } */) => {
-    console.log('### initialization ###');
-    // Dark mode 설정
-    const darkMode = LocalStorage.getItem('darkMode');
-    Dark.set(darkMode);
-  });
-  ```
-
-  > boot 파일에 만들면 파일명을 콰이사 컴픽 파일에 세팅을 해야함  
-  > 뷰컴포넌트에 해당하는 파일이 아니어서 q오브젝트에 접근하려면  
-  > import { LocalStorage, Dark } from 'quasar'; 이런식으로 임포트해서  
-  > $q.localStorage -> LocalStorage , $q.dark -> Dark 로 사용이 가능
-
-  ```scss
-  // body.body--light {
-  //   /* ... */
-  // }
-
-  body.body--dark {
-  /_ ... _/
-  --q-primary: #161717; // css의 루트 변수 변경 동적 변경
-  }
-  ```
-
-  > 위의 코드와 같이 app.scss 파일에서 동적으로 변경할 수 있다.
