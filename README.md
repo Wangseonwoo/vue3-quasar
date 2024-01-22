@@ -289,8 +289,34 @@ body.body--dark {
 
 * CLI 활용 자동 생성
 
-```bash
-  $ quasar new layout <파일 명>
-```
+  ```bash
+    $ quasar new layout <파일 명>
+  ```
 
-> 나머지는 위와 동일
+  > 나머지는 위와 동일
+
+## 9. 중첩 Router-View
+
+> 중첩 Router-View를 사용할 페이지에 Router-View태그 선언  
+> routes.js 파일에 경로 설정
+
+```js
+{
+        path: '/profile',
+        component: () => import('pages/profile/ProfilePage.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('pages/profile/ProfilePosts.vue'),
+          },
+          {
+            path: 'saved',
+            component: () => import('pages/profile/ProfileSaved.vue'),
+          },
+          {
+            path: 'tagged',
+            component: () => import('pages/profile/ProfileTagged.vue'),
+          },
+        ],
+      },
+```

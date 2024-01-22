@@ -8,7 +8,24 @@ const routes = [
       { path: '/colors', component: () => import('pages/Colors.vue') },
       { path: '/spacing', component: () => import('pages/Spacing.vue') },
       { path: '/flex-grid-1', component: () => import('pages/FlexGrid1.vue') },
-      { path: '/flex-grid-2', component: () => import('pages/FlexGrid2.vue') },
+      {
+        path: '/profile',
+        component: () => import('pages/profile/ProfilePage.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('pages/profile/ProfilePosts.vue'),
+          },
+          {
+            path: 'saved',
+            component: () => import('pages/profile/ProfileSaved.vue'),
+          },
+          {
+            path: 'tagged',
+            component: () => import('pages/profile/ProfileTagged.vue'),
+          },
+        ],
+      },
       {
         path: '/breakpoints',
         component: () => import('pages/Breakpoints.vue'),
