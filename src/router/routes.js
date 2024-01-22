@@ -19,6 +19,15 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/sub',
+    component: () => import('layouts/SubLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/sub/IndexPage.vue') },
+      { path: 'sub-page-1', component: () => import('pages/sub/SubPage1.vue') },
+      { path: 'sub-page-2', component: () => import('pages/sub/SubPage2.vue') },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

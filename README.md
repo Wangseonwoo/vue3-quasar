@@ -231,3 +231,66 @@ body.body--dark {
   <div class="col-12 col-sm-6 col-md-4 col-lg-3"></div>
   <!-- default값, 사이즈별 값을 설정할 수 있다. -->
   ```
+
+## 8. Multi-Layout
+
+- Layout 생성 및 설정 법
+
+  > layouts 폴더에 파일 생성 및 하위 경로 추가
+
+  ```js
+  import { ref } from 'vue';
+
+  const items = ref([
+    { title: 'Sub Page 1', to: '/sub/sub-page-1' },
+    { title: 'Sub Page 2', to: '/sub/sub-page-2' },
+  ]);
+
+  const leftDrawerOpen = ref(false);
+  function toggleLeftDrawer() {
+    leftDrawerOpen.value = !leftDrawerOpen.value;
+  }
+  ```
+
+  > routes.js 파일에 경로 배열 추가
+
+  ```js
+    {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/IndexPage.vue') },
+      { path: '/typography', component: () => import('pages/Typography.vue') },
+      { path: '/colors', component: () => import('pages/Colors.vue') },
+      { path: '/spacing', component: () => import('pages/Spacing.vue') },
+      { path: '/flex-grid-1', component: () => import('pages/FlexGrid1.vue') },
+      { path: '/flex-grid-2', component: () => import('pages/FlexGrid2.vue') },
+      {
+        path: '/breakpoints',
+        component: () => import('pages/Breakpoints.vue'),
+      },
+      {
+        path: '/classes-variables',
+        component: () => import('pages/ClassesVariables.vue'),
+      },
+    ],
+  },
+  <!-- 추가한 경로 -->
+  {
+    path: '/sub',
+    component: () => import('layouts/SubLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/sub/IndexPage.vue') },
+      { path: 'sub-page-1', component: () => import('pages/sub/SubPage1.vue') },
+      { path: 'sub-page-2', component: () => import('pages/sub/SubPage2.vue') },
+    ],
+  },
+  ```
+
+* CLI 활용 자동 생성
+
+```bash
+  $ quasar new layout <파일 명>
+```
+
+> 나머지는 위와 동일
