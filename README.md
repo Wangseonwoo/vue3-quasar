@@ -196,104 +196,104 @@ body.body--dark {
 
 ## 7. Flexbox & Grid
 
-- flexbox 지정하는 법
+### flexbox 지정하는 법
 
-  ```html
-  <div class="row"></div>
-  <div class="column"></div>
-  ```
+```html
+<div class="row"></div>
+<div class="column"></div>
+```
 
-  > Flex는 12 column 사이즈로 되어있음 col 합이 12가 넘으면 아래로 줄 이동 함
+> Flex는 12 column 사이즈로 되어있음 col 합이 12가 넘으면 아래로 줄 이동 함
 
-* gutter 주는 법
+### gutter 주는 법
 
-  > 일반 아이템일 경우
+> 일반 아이템일 경우
 
-  ```html
-  <!-- 상하좌우 전부  -->
-  <div class="q-gutter-md"></div>
-  <!-- 좌우 만  -->
-  <div class="q-gutter-x-md"></div>
-  <!-- 상하 만  -->
-  <div class="q-gutter-y-md"></div>
-  ```
+```html
+<!-- 상하좌우 전부  -->
+<div class="q-gutter-md"></div>
+<!-- 좌우 만  -->
+<div class="q-gutter-x-md"></div>
+<!-- 상하 만  -->
+<div class="q-gutter-y-md"></div>
+```
 
-  > flex 요소 아이템일 경우
+> flex 요소 아이템일 경우
 
-  ```html
-  <!-- q 뒤에 col을 붙인다. -->
-  <div class="q-col-gutter-md"></div>
-  ```
+```html
+<!-- q 뒤에 col을 붙인다. -->
+<div class="q-col-gutter-md"></div>
+```
 
-  > breakpoint를 설정할수 있다.
+> breakpoint를 설정할수 있다.
 
-  ```html
-  <div class="col-12 col-sm-6 col-md-4 col-lg-3"></div>
-  <!-- default값, 사이즈별 값을 설정할 수 있다. -->
-  ```
+```html
+<div class="col-12 col-sm-6 col-md-4 col-lg-3"></div>
+<!-- default값, 사이즈별 값을 설정할 수 있다. -->
+```
 
 ## 8. Multi-Layout
 
-- Layout 생성 및 설정 법
+### Layout 생성 및 설정 법
 
-  > layouts 폴더에 파일 생성 및 하위 경로 추가
+> layouts 폴더에 파일 생성 및 하위 경로 추가
 
-  ```js
-  import { ref } from 'vue';
+```js
+import { ref } from 'vue';
 
-  const items = ref([
-    { title: 'Sub Page 1', to: '/sub/sub-page-1' },
-    { title: 'Sub Page 2', to: '/sub/sub-page-2' },
-  ]);
+const items = ref([
+  { title: 'Sub Page 1', to: '/sub/sub-page-1' },
+  { title: 'Sub Page 2', to: '/sub/sub-page-2' },
+]);
 
-  const leftDrawerOpen = ref(false);
-  function toggleLeftDrawer() {
-    leftDrawerOpen.value = !leftDrawerOpen.value;
-  }
-  ```
+const leftDrawerOpen = ref(false);
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
+```
 
-  > routes.js 파일에 경로 배열 추가
+> routes.js 파일에 경로 배열 추가
 
-  ```js
-    {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: '/typography', component: () => import('pages/Typography.vue') },
-      { path: '/colors', component: () => import('pages/Colors.vue') },
-      { path: '/spacing', component: () => import('pages/Spacing.vue') },
-      { path: '/flex-grid-1', component: () => import('pages/FlexGrid1.vue') },
-      { path: '/flex-grid-2', component: () => import('pages/FlexGrid2.vue') },
-      {
-        path: '/breakpoints',
-        component: () => import('pages/Breakpoints.vue'),
-      },
-      {
-        path: '/classes-variables',
-        component: () => import('pages/ClassesVariables.vue'),
-      },
-    ],
-  },
-  <!-- 추가한 경로 -->
+```js
   {
-    path: '/sub',
-    component: () => import('layouts/SubLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/sub/IndexPage.vue') },
-      { path: 'sub-page-1', component: () => import('pages/sub/SubPage1.vue') },
-      { path: 'sub-page-2', component: () => import('pages/sub/SubPage2.vue') },
-    ],
-  },
-  ```
+  path: '/',
+  component: () => import('layouts/MainLayout.vue'),
+  children: [
+    { path: '', component: () => import('pages/IndexPage.vue') },
+    { path: '/typography', component: () => import('pages/Typography.vue') },
+    { path: '/colors', component: () => import('pages/Colors.vue') },
+    { path: '/spacing', component: () => import('pages/Spacing.vue') },
+    { path: '/flex-grid-1', component: () => import('pages/FlexGrid1.vue') },
+    { path: '/flex-grid-2', component: () => import('pages/FlexGrid2.vue') },
+    {
+      path: '/breakpoints',
+      component: () => import('pages/Breakpoints.vue'),
+    },
+    {
+      path: '/classes-variables',
+      component: () => import('pages/ClassesVariables.vue'),
+    },
+  ],
+},
+<!-- 추가한 경로 -->
+{
+  path: '/sub',
+  component: () => import('layouts/SubLayout.vue'),
+  children: [
+    { path: '', component: () => import('pages/sub/IndexPage.vue') },
+    { path: 'sub-page-1', component: () => import('pages/sub/SubPage1.vue') },
+    { path: 'sub-page-2', component: () => import('pages/sub/SubPage2.vue') },
+  ],
+},
+```
 
-* CLI 활용 자동 생성
+### CLI 활용 자동 생성
 
-  ```bash
-    $ quasar new layout <파일 명>
-  ```
+```bash
+  $ quasar new layout <파일 명>
+```
 
-  > 나머지는 위와 동일
+> 나머지는 위와 동일
 
 ## 9. 중첩 Router-View
 
@@ -320,3 +320,43 @@ body.body--dark {
         ],
       },
 ```
+
+## 10. Q-Input
+
+### q-input 사용 방법
+
+```html
+<q-form>
+  <q-input
+    filled
+    type="password"
+    label="비밀번호"
+    hint="영문 대/소문자 포함 8자 이상."
+  ></q-input>
+  <q-input
+    input-class="text-right"
+    filled
+    label="나이"
+    prefix="만 나이"
+    suffix="세"
+  ></q-input>
+  <q-input
+    filled
+    v-model="card"
+    label="Card"
+    mask="#### - #### - #### - ####"
+    fill-mask="#"
+    unmasked-value
+  />
+</q-form>
+```
+
+> prefix = 입력시 앞 부분에 작성한 텍스트 노출  
+> suffix = 입력시 뒷 부분에 작성한 텍스트 노출  
+> mask = 입력 양식(?) 설정  
+> fill-mask = 양식에 기본 값(?) 설정  
+> input-class = input 태그의 class를 지정
+
+### etc
+
+> 클래스 안에 window-height를 사용하면 윈도우 뷰포트 기준으로 함
