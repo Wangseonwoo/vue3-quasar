@@ -34,6 +34,10 @@ const routes = [
         path: '/classes-variables',
         component: () => import('pages/ClassesVariables.vue'),
       },
+      {
+        path: '/form-handling',
+        component: () => import('pages/FormHandling.vue'),
+      },
     ],
   },
   {

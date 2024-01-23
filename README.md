@@ -360,3 +360,45 @@ function toggleLeftDrawer() {
 ### etc
 
 > 클래스 안에 window-height를 사용하면 윈도우 뷰포트 기준으로 함
+
+## 11. Form-Handling
+
+### 태그에 작성하는 기능 소개
+
+1. emit-value
+
+   ```js
+   const tagOptions = ref([
+     { label: '구글', value: 'Google' },
+     { label: '페이스북', value: 'Facebook' },
+     { label: '트위터', value: 'Twitter' },
+     { label: '애플', value: 'Apple' },
+     { label: '오라클', value: 'Oracle' },
+   ]);
+   ```
+
+   > 위의 예시와 같이 label이 value 값과 다를 때 화면에 출력시 Object 값으로 출력 되는 것을 방지하여 value 값 출력
+
+1. rules
+
+   ```html
+   <q-input :rules="[val => !!val || '필수 항목입니다.']" />
+   ```
+
+   > 예시 와 같이 유효성 검사를 위해 사용
+
+1. autofocus
+
+   ```html
+   <q-form ref="myForm" class="q-gutter-y-md q-mt-lg" autofocus></q-form>
+   ```
+
+   > 페이지 랜더링 시 form 태그 안의 첫 번째 input태그에 포커스
+
+1. greedy
+
+   ```html
+   <q-form ref="myForm" class="q-gutter-y-md q-mt-lg" greedy></q-form>
+   ```
+
+   > form 안의 input 요소를 한번에 유효성 검사를 체크함
