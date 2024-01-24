@@ -106,6 +106,12 @@ const linksList = [
     icon: 'school',
     to: '/form-handling',
   },
+  {
+    title: 'Quasar utils',
+    caption: 'quasar.dev',
+    icon: 'school',
+    to: '/quasar-utils',
+  },
 ];
 </script>
 

@@ -9,6 +9,8 @@ npm i -g @quasar/cli
 npm init quasar
 ```
 
+<br><br>
+
 ## 2. Typhography
 
 ### 링크 추가하는법
@@ -19,6 +21,8 @@ npm init quasar
 
 > class = 'text-h4 q-pa-xl' 등 이있다. 자세한건 공식문서 참조
 
+<br><br>
+
 ## 3. Colors
 
 ### Quasar는 지정된 명령어에 기본으로 저장되어있는 색상 코드가 존재
@@ -27,6 +31,8 @@ npm init quasar
 > -> css 폴더 안의 quasar.variables.scss 파일에서 변경  
 > 폰트 스타일등 스타일을 import 해서 사용 할때는  
 > -> app.scss파일 에서 사용
+
+<br><br>
 
 ## 4. Breakpoints
 
@@ -82,6 +88,8 @@ framework: {
 <q-page class="q-pa-md q-pa-md-xl"></q-page>
 ```
 
+<br><br>
+
 ## 5. Classes & Variables
 
 ### Helper Class
@@ -122,6 +130,8 @@ framework: {
 
   > Vairables list 에서 변경하고 싶은 변수를 복사해  
   > quasar.variables.scss파일 에 붙여 넣고 원사는 값으로 수정 가능
+
+<br><br>
 
 ## 6. Dark Mode
 
@@ -194,6 +204,8 @@ body.body--dark {
 
 > 위의 코드와 같이 app.scss 파일에서 동적으로 변경할 수 있다.
 
+<br><br>
+
 ## 7. Flexbox & Grid
 
 ### flexbox 지정하는 법
@@ -231,6 +243,8 @@ body.body--dark {
 <div class="col-12 col-sm-6 col-md-4 col-lg-3"></div>
 <!-- default값, 사이즈별 값을 설정할 수 있다. -->
 ```
+
+<br><br>
 
 ## 8. Multi-Layout
 
@@ -295,6 +309,8 @@ function toggleLeftDrawer() {
 
 > 나머지는 위와 동일
 
+<br><br>
+
 ## 9. 중첩 Router-View
 
 > 중첩 Router-View를 사용할 페이지에 Router-View태그 선언  
@@ -320,6 +336,8 @@ function toggleLeftDrawer() {
         ],
       },
 ```
+
+<br><br>
 
 ## 10. Q-Input
 
@@ -360,6 +378,8 @@ function toggleLeftDrawer() {
 ### etc
 
 > 클래스 안에 window-height를 사용하면 윈도우 뷰포트 기준으로 함
+
+<br><br>
 
 ## 11. Form-Handling
 
@@ -402,3 +422,81 @@ function toggleLeftDrawer() {
    ```
 
    > form 안의 input 요소를 한번에 유효성 검사를 체크함
+
+<br><br>
+
+## 12. Utils
+
+### 간략한 utils 소개
+
+- Date Util
+
+  > 날짜 관련 util
+
+  ```html
+  <div class="text-h6">formatDate - {{ formatDate(new Date(), FORMAT) }}</div>
+  <div class="text-h6">
+    addToDate - {{ formatDate(addToDate(new Date(), { days: 7 }), FORMAT) }}
+  </div>
+  <div class="text-h6">
+    subtractFromDate - {{ formatDate(subtractFromDate(new Date(), { days: 7 }),
+    FORMAT) }}
+  </div>
+  ```
+
+  ```js
+  import { date } from 'quasar';
+
+  const FORMAT = 'YYYY-MM_DD HH:mm:ss';
+  const { formatDate, addToDate, subtractFromDate } = date;
+  ```
+
+  > formatDate: 날짜를 원하는 형식으로 출력 도움  
+  > addToDate: 옵션 값으로 넣은 날짜 만큼 날짜를 더함  
+  > subtractFromDate: 옵션 값으로 넣은 날짜 만큼 날짜를 뺌
+
+- Format Util
+
+  > 출력 형식 관련 util
+
+  ```html
+  <div class="text-h6">pad - {{ pad('hello', 10, '#') }}</div>
+  ```
+
+  ```js
+  import { format } from 'quasar';
+
+  const { pad } = format;
+  ```
+
+  > pad('문자', 문자수, 출력 문자 형식)  
+  > 문자: 출력할 문자  
+  > 문자 수: 기본으로 출력할 문자 갯수  
+  >  출력 문자 형식: 기본으로 보여질 문자
+
+- Type Checking Util
+
+  > 비교 util
+
+  ```html
+  <!-- 얕은 비교 -->
+  <div class="text-h6">objA === objB - {{ objA === objB }}</div>
+  <!-- 깊은 비교 -->
+  <div class="text-h6">
+    deepEqual objA === objB - {{ deepEqual(objA, objB) }}
+  </div>
+  ```
+
+  ```js
+  import { is } from 'quasar';
+
+  const { deepEqual } = is;
+
+  const objA = { name: 'abc', age: 30, hobby: 'game' };
+  const objB = { name: 'abc', age: 30, hobby: 'game' };
+  ```
+
+  > objA === objB로 비교시 얕은 비교가 되어 주소를 찾아가 비교 하여 false값이 나옴  
+  > util을 사용하여 deepEqual(objA, objB) 깊은 비교를 하면 객체 안의 값들을 비교하여 true값이 나옴
+
+* 나머지는 공식문서 참조
