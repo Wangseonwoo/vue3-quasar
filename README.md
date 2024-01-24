@@ -160,7 +160,9 @@ const toggleDarkMode = () => {
 ```
 
 > toggle을 사용하여 다크, 라이트로 상태 변환
-> localStorage를 활용 하여 웹 로컬스토리지에 상태 저장
+
+### localStorage를 활용 하여 웹 로컬스토리지에 상태 저장
+
 > ❗️새로 고침시 상태가 바뀜 그러므로 로컬 스토리지 getItem을 사용하여 상태 불러오기
 
 ```js
@@ -171,7 +173,7 @@ const init = () => {
 init();
 ```
 
-> ❓ 위의 코드를 boot 폴더로 생성하여 따로 관리
+### ❓ 위의 코드를 boot 폴더로 생성하여 따로 관리
 
 ```bash
 $ quasar new boot <파일 명>
@@ -500,3 +502,139 @@ function toggleLeftDrawer() {
   > util을 사용하여 deepEqual(objA, objB) 깊은 비교를 하면 객체 안의 값들을 비교하여 true값이 나옴
 
 * 나머지는 공식문서 참조
+
+<br><br>
+
+## 13. Plugin
+
+### Plugin 사용법
+
+> quasar.config.js 파일 framework 부분 plugin에 추가
+
+### 1) 해당 뷰 페이지에서 사용
+
+```js
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
+
+const onSubmit = () => {
+  if (form.value.accept !== true) {
+    alert('동의 해주세요!!!');
+    return;
+  }
+  $q.loading.show({
+    message: 'loading',
+  });
+  setTimeout(() => {
+    $q.loading.hide();
+    alert('성공');
+  }, 3000);
+};
+```
+
+### 2) quasar.config.js에서 전역적으로 사용하는 방법
+
+> [1)](#1-해당-뷰-페이지에서-사용)의 방법과 같이 뷰페이지에서 사용하고 관련 옵션을 불러 옴
+
+```js
+ plugins: ['LocalStorage', 'Loading', 'LoadingBar'], // 새로고침시 다크모드 풀림
+      config: {
+        //로딩관련 옵션 전역 설정
+        loading: { message: 'loading' },
+      },
+```
+
+### 3) boot 파일을 생성하여 전역적으로 사용하는 방법
+
+> [1)](#1-해당-뷰-페이지에서-사용)의 방법과 같이 뷰페이지에서 사용하고 관련 옵션을 불러 옴  
+> [CLI boot 폴더 파일 생성법](#❓-위의-코드를-boot-폴더로-생성하여-따로-관리)
+
+```js
+import { boot } from 'quasar/wrappers';
+import { LoadingBar } from 'quasar';
+
+export default boot(async ) => {
+  LoadingBar.setDefaults({
+    color: 'yellow',
+    size: '4px',
+  });
+});
+```
+
+### ❓ 다양한 Plugin은 공식문서 참조
+
+<br><br>
+
+## 14. LanguagePacks
+
+### 언어 설정 사용법
+
+```js
+// framework 부분에 추가
+lang: 'ko-KR',
+```
+
+#### 내장 모듈 사용
+
+```js
+<script> // 반응형을 사용하지 않으므로 setup 부분에서 안하고 따로 뺌
+import language from 'quasar/lang/index.json';
+console.log('language: ', language);
+
+const appLanguages = language.filter(lang =>
+  ['ko-KR', 'en-US'].includes(lang.isoName),
+);
+console.log('appLanguages: ', appLanguages);
+
+const langOptions = appLanguages.map(lang => ({
+  label: lang.nativeName,
+  value: lang.isoName,
+}));
+
+console.log('langOptions: ', langOptions);
+</script>
+
+<script setup>
+import { useQuasar } from 'quasar';
+import { ref, watch } from 'vue';
+
+const $q = useQuasar();
+const lang = ref($q.lang.isoName);
+
+watch(lang, val => {
+  console.log('val: ', val);
+  import('../../node_modules/quasar/lang/' + val).then(lang => {
+    $q.lang.set(lang.default);  // 기본 언어 변경
+    $q.localStorage.set('lang', val); // localStorage에 저장
+  });
+});
+</script>
+```
+
+### localStorage에 상태 저장한 데이터 유지
+
+- 부트 파일 생성
+
+  ```js
+  import { boot } from 'quasar/wrappers';
+  import { LocalStorage, Quasar } from 'quasar';
+
+  export default boot(async () => {
+    const val = LocalStorage.getItem('lang');
+    import('../../node_modules/quasar/lang/' + val).then(lang => {
+      Quasar.lang.set(lang.default); // localStorage에 저장된 값 default로 사용
+    });
+  });
+  ```
+
+* 부트 경로 추가
+
+  ```js
+  boot: [
+      'initialization',
+      'constants',
+      'loading-plugin',
+      'loading-bar-plugin',
+      'quasar-lang-pack',
+    ],
+  ```

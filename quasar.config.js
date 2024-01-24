@@ -27,7 +27,13 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['initialization', 'constants'],
+    boot: [
+      'initialization',
+      'constants',
+      'loading-plugin',
+      'loading-bar-plugin',
+      'quasar-lang-pack',
+    ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -85,6 +91,7 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
+      lang: 'ko-KR',
       cssAddon: true,
 
       config: {
@@ -104,7 +111,11 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['LocalStorage'], // 새로고침시 다크모드 풀림
+      plugins: ['LocalStorage', 'Loading', 'LoadingBar'], // 새로고침시 다크모드 풀림
+      config: {
+        //로딩관련 옵션 전역 설정
+        // loading: { message: 'loading' },
+      },
     },
 
     // animations: 'all', // --- includes all animations
