@@ -638,3 +638,109 @@ watch(lang, val => {
       'quasar-lang-pack',
     ],
   ```
+
+  <br><br>
+
+## 14. App Internationalization (i18n)
+
+### 설치 방법
+
+```shell
+$ npm install vue-i18n@next
+```
+
+### 1. boot 파일 생성
+
+```js
+import { boot } from 'quasar/wrappers';
+import { createI18n } from 'vue-i18n';
+import { LocalStorage } from 'quasar';
+import messages from 'src/i18n';
+
+export default boot(async ({ app }) => {
+  const locale = LocalStorage.getItem('lang') || 'ko-KR';
+  const i18n = createI18n({
+    legacy: false, // 오류 막기
+    locale,
+    messages,
+  });
+  app.use(i18n);
+});
+```
+
+> Uncaught (in promise) SyntaxError: Not available in legacy mode 이러한 오류로 인하여 legacy: false 옵션 사용
+
+#### ❗ boot 파일 안에서 설정및 옵션을 전부 줄수 있으나 언어의 갯수 및 메시지가 많아지면 구분 및 파악이 어려워 지기 때문에 i18n 폴더를 별도로 생성해서 언어별로 관리
+
+### 2. i18n 폴더 생성
+
+```js
+// index.js
+import enUS from './en-US';
+import koKR from './ko-KR';
+export default {
+  'en-US': enUS,
+  'ko-KR': koKR,
+};
+```
+
+### 3. 언어별로 파일 분할
+
+```js
+// en-US.js
+export default {
+  productName: 'Quasar App',
+  hello: 'hello',
+};
+```
+
+```js
+// ko-KR.js
+export default {
+  productName: '퀘이사 앱',
+  hello: '안녕하세요',
+};
+```
+
+### 4. vue 페이지에 적용
+
+```html
+<!-- 템플릿에 사용시 -->
+<section class="q-mb-xl">
+  <div class="text-h4">i18n - locale</div>
+  <q-separator class="q-my-md" />
+  <div>locale - {{ locale }}</div>
+  <div>locale - {{ $t('hello') }}</div>
+  <div>locale - {{ $t('productName') }}</div>
+</section>
+```
+
+> 템플릿에 사용시 {{ $t(변수명) }} 으로 사용
+
+```js
+import { useI18n } from 'vue-i18n';
+const { t, locale } = useI18n();
+console.log('hello: ', t('hello'));
+console.log('productName: ', t('productName'));
+```
+
+### 5. 새로고침을 안하고 언어 변경시마다 자동 적용 시키기
+
+```js
+import { useQuasar } from 'quasar';
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+const $q = useQuasar();
+const lang = ref($q.lang.isoName);
+
+watch(lang, val => {
+  console.log('val: ', val);
+  import('../../node_modules/quasar/lang/' + val).then(lang => {
+    $q.lang.set(lang.default);
+    locale.value = val;
+    $q.localStorage.set('lang', val);
+  });
+});
+```
+
+> 로컬소토리지에 저장 및 locale 값 설정으로 언어 자동 변경
