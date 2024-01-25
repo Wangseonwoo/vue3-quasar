@@ -68,6 +68,9 @@ const isSearchFocus = ref(false);
 <style lang="scss" scoped>
 .q-toolbar {
   height: 56px;
+  border-style: solid;
+  border-width: 0px 0px 1px 0;
+  border-color: #c9c9c9;
 }
 .search {
   min-width: 100px;

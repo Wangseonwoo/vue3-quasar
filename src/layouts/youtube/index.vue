@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR lFf">
+  <q-layout view="hHh LpR lFf">
     <YoutubeHeader />
     <YoutubeDrawer />
     <YoutubeContent />
