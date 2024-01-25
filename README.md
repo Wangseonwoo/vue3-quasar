@@ -15,7 +15,8 @@ A Quasar Project
 [12. Utils](#12-utils)  
 [13. Plugin](#13-plugin)  
 [14. Languagepacks](#14-languagepacks)  
-[15. App Internationalization (i18n)](#15-app-internationalization-i18n)
+[15. App Internationalization (i18n)](#15-app-internationalization-i18n)  
+[16. Deploying With Vercel](#16-deploying-with-vercel)
 
 ## 1. Quasar CLI Start
 
@@ -190,7 +191,7 @@ init();
 
 ### ❓ 위의 코드를 boot 폴더로 생성하여 따로 관리
 
-```bash
+```console
 $ quasar new boot <파일 명>
 ```
 
@@ -320,7 +321,7 @@ function toggleLeftDrawer() {
 
 ### CLI 활용 자동 생성
 
-```bash
+```console
   $ quasar new layout <파일 명>
 ```
 
@@ -759,3 +760,51 @@ watch(lang, val => {
 ```
 
 > 로컬소토리지에 저장 및 locale 값 설정으로 언어 자동 변경
+
+<br><br>
+
+## 16. Deploying with Vercel
+
+### Build 생성
+
+```console
+$ quasar build
+```
+
+### Vercel CLI 설치
+
+```console
+$ npm i -g vercel
+```
+
+### Vercel CLI 접속
+
+```console
+$ vercel login
+```
+
+### Vercel 실행
+
+```console
+$ vercel
+```
+
+#### ❗ Build 후 생긴 dist폴더안 spa폴더인지 ssr 폴더인지 확인 진행 후 아래의 파일 생성
+
+ex) spa
+
+```js
+//  vercel.json파일 생성
+{
+  "outputDirectory": "dist/spa",  // 경로 설정
+  "routes": [{ "handle": "filesystem" }, { "src": "/.*", "dest": "/" }]
+   // 재 배포 후  previews 사이트 새로고침 404 오류 방지
+}
+
+```
+
+### Vercel Production 재 배포
+
+```console
+$ vercel --prod
+```
