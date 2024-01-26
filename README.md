@@ -16,7 +16,8 @@ A Quasar Project
 [13. Plugin](#13-plugin)  
 [14. Languagepacks](#14-languagepacks)  
 [15. App Internationalization (i18n)](#15-app-internationalization-i18n)  
-[16. Deploying With Vercel](#16-deploying-with-vercel)
+[16. Deploying With Vercel](#16-deploying-with-vercel)  
+[17. SEO](#17-seo)
 
 ## 1. Quasar CLI Start
 
