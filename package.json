@@ -1,8 +1,8 @@
 {
   "name": "learn-quasar",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Quasar App",
+  "description": "wnag의 퀘이사 공부 입니다",
+  "productName": "퀘이사 앱",
   "author": "Wangseonwoo <dmb05007@naver.com>",
   "private": true,
   "scripts": {

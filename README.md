@@ -808,3 +808,50 @@ ex) spa
 ```console
 $ vercel --prod
 ```
+
+<br><br>
+
+## 17. SEO
+
+### SEO plugin 사용법
+
+#### quasar.config.js 파일에 아래 코드 적용
+
+```js
+framework: {
+  plugins: ['Meta'];
+}
+```
+
+#### package.json 파일의 description, productName 수정 -> 정적으로 고정 되어있음 index.html 파일에서 호출하여 사용
+
+```js
+// ex)
+"description": "wnag의 퀘이사 공부 입니다",
+"productName": "퀘이사 앱",
+```
+
+#### vue page에서 활용 하는 방법 -> 동적으로 변경 가능
+
+```js
+// 정의
+<script>
+import { useMeta } from 'quasar';
+
+const metaData = {
+  title: 'Typography',
+  meta: {
+    description: {
+      name: 'description',
+      content: 'wang의 퀘이사 공부 중 Typography에 대한 코드입니다.',
+    },
+    keywords: { name: 'keywords', content: 'wang, Quasar, 공부, Typography' },
+  },
+};
+</script>
+
+// 호출
+<script setup>
+useMeta(metaData);
+</script>
+```

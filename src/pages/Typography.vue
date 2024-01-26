@@ -63,6 +63,22 @@
   </q-page>
 </template>
 
-<script setup></script>
+<script>
+import { useMeta } from 'quasar';
+
+const metaData = {
+  title: 'Typography',
+  meta: {
+    description: {
+      name: 'description',
+      content: 'wang의 퀘이사 공부 중 Typography에 대한 코드입니다.',
+    },
+    keywords: { name: 'keywords', content: 'wang, Quasar, 공부, Typography' },
+  },
+};
+</script>
+<script setup>
+useMeta(metaData);
+</script>
 
 <style lang="scss" scoped></style>

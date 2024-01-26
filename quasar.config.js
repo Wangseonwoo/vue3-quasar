@@ -112,7 +112,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['LocalStorage', 'Loading', 'LoadingBar'], // 새로고침시 다크모드 풀림
+      plugins: ['LocalStorage', 'Loading', 'LoadingBar', 'Meta'], // 새로고침시 다크모드 풀림
       config: {
         //로딩관련 옵션 전역 설정
         // loading: { message: 'loading' },
